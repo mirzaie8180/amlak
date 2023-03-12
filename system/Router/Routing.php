@@ -22,6 +22,28 @@ class Routing
 
     }
 
+    public function run()
+    {
+
+    }
+
+    public function match()
+    {
+
+    }
+
+    public function compare()
+    {
+
+    }
+
+    public function error404()
+    {
+        http_response_code(404); 
+        include __DIR__ . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR . '404.php';
+        exit;
+    }
+
     public function methodField()
     {
         $method_field = strtolower($_SERVER['REQUEST_METHOD']);
