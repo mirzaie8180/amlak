@@ -32,8 +32,37 @@ class Routing
 
     }
 
-    public function compare()
+    public function compare($reservedRouteUrl)
     {
+
+        //part1 // شرط گذاشتیم که با اسلش شروع بشه 
+        if(trim($reservedRouteUrl , '/') === '')
+        {
+            return trim($this->current_route[0] , '/') === '' ? true : false;
+        }
+
+        //part2 // توی این قسمت چک میکنیم که سایز روت هایی که ما رزرو کردیم با اونی که کاربر وارد میکنه برابره یا چی
+        $reservedRouteUrlArray = explode('/' , $reservedRouteUrl);
+        if(sizeof($this->current_route) != sizeof($reservedRouteUrlArray))
+        {
+            return false;
+        }
+    
+        //part3
+        foreach ($this->current_route as $key => $currentRouteElement)
+        {
+         $reservedRouteUrlElement = $reservedRouteUrlArray[$key];
+            if(substr($reservedRouteUrlElement , 0 ,1) == "{" && substr($reservedRouteUrlElement , -1) == "}" )
+            {
+                array_push($this->values , $currentRouteElement);
+
+            }
+            elseif($reservedRouteUrlElement != $currentRouteElement)
+            {
+                return false;
+            }
+        }
+        return true;
 
     }
 
